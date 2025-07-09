@@ -97,17 +97,3 @@ Telegram Bot Developer
 
 📄 License
 This project is for educational and demo purposes only. Commercial use requires explicit permission from the author.
-
-markdown
-Copy
-Edit
-
----
-
-## ℹ️ Qo‘shimcha Tavsiyalar
-
-- Faylni `README.md` deb nomlang va GitHub repo rootiga qo‘ying.
-- Skrinshotlar qo‘shsangiz, ularni `/images/screenshots/` papkaga joylashtirib, `README`ga `![](path/to/image.png)` ko‘rinishida joylang.
-- Agar bu saytdan bir nechta versiyalar (masalan, `english-site`, `sat-site`) bo‘lsa, `README`ni har biriga moslab ajratib yozing.
-
-Agar hohlasangiz, men ushbu `README.md` faylini siz uchun `.md` fayl formatida tayyorlab ham beraman. Ya
