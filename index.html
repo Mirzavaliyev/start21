@@ -1,605 +1,1341 @@
 <!DOCTYPE html>
 <html lang="uz">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>O‘quv Markazi | Start21</title>
     <!-- SwiperJS CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome ikonkalar uchun -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKB4nnWvwoFzj4QhR6v8mHo3UpyZtN+ybPtU+6HPhAnazIuUZn7YjBkdc0C+ISxj08Rm26z0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-  </head>
-  <body class="bg-gray-50 text-gray-800 text-[18px]">
+      body {
+        font-family: 'Roboto', sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      /* Mobil navigatsiya */
+      .mobile-nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        overflow-y: auto;
+        transform: translateY(-100%);
+        transition: transform 0.4s ease;
+      }
+
+      .mobile-nav.active {
+        display: block;
+        transform: translateY(0);
+      }
+
+      .swiper-slide {
+        height: auto !important;
+      }
+
+      .course-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
+
+      .certificate-img {
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .certificate-img:hover {
+        transform: scale(1.03);
+      }
+
+      .stat-card {
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
+
+      .teacher-btn {
+        transition: all 0.3s ease;
+      }
+
+      .teacher-btn:hover {
+        transform: scale(1.05);
+      }
+
+      .submit-btn {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .submit-btn:hover {
+        background-color: #e53e3e;
+        transform: translateY(-2px);
+      }
+
+      .submit-btn:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+      }
+
+      .submit-btn:focus:after {
+        animation: ripple 1s ease-out;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(0, 0);
+          opacity: 0.5;
+        }
+        20% {
+          transform: scale(25, 25);
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0;
+          transform: scale(50, 50);
+        }
+      }
+
+      .branch-card {
+        transition: all 0.3s ease;
+      }
+
+      .branch-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .text-responsive {
+          font-size: 1rem;
+        }
+        .text-lg-responsive {
+          font-size: 1.1rem;
+        }
+        .text-xl-responsive {
+          font-size: 1.25rem;
+        }
+        .text-2xl-responsive {
+          font-size: 1.5rem;
+        }
+        .text-3xl-responsive {
+          font-size: 1.75rem;
+        }
+        .text-4xl-responsive {
+          font-size: 2rem;
+        }
+        .text-5xl-responsive {
+          font-size: 2.25rem;
+        }
+        .py-responsive {
+          padding-top: 1.5rem;
+          padding-bottom: 1.5rem;
+        }
+        .px-responsive {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+
+        .mobile-nav ul li a {
+          padding: 12px 0;
+        }
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 text-responsive">
 
     <!-- Navbar -->
-<nav class="bg-black shadow-md text-[18px]">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="#">
-      <img src="images/logo.jpg" alt="Start21 logo" class="h-10" />
-    </a>
-    <ul class="flex space-x-6 text-lg font-medium text-white">
-      <li><a href="#" class="hover:text-red-500 transition">Bosh sahifa</a></li>
-      <li><a href="#courses" class="hover:text-red-500 transition">Kurslar</a></li>
-      <li><a href="#signup" class="hover:text-red-500 transition">Ro‘yxatdan o‘tish</a></li>
-      <li><a href="#certificates" class="hover:text-red-500 transition">Sertifikatlar</a></li>
-      <li><a href="#contact" class="hover:text-red-500 transition">Aloqa</a></li>
-    </ul>
-  </div>
-</nav>
-<section class="relative text-black text-center py-32 px-6 text-[19px]" style="background-image: url('images/logo_big.jpg'); background-size: cover; background-position: center;">
-  <div class="relative z-10 max-w-3xl mx-auto">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4">Kel, O'qi, Yuksal</h2>
-    <p class="text-lg md:text-xl mb-6">Ingliz tilini o‘rganish uchun eng yaxshi joy!</p>
-    <a href="#signup" class="bg-white text-red-600 px-6 py-2 rounded-full font-semibold shadow hover:bg-red-100 transition">Kursga yozilish</a>
-  </div>
-</section>
+    <nav class="bg-black shadow-md text-lg sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <!-- LOGO: Avvalgi holatida rasm sifatida -->
+        <a href="#" class="flex items-center">
+          <img src="images/logo.jpg" alt="Start21 logo" class="h-8 md:h-10" />
+          <span class="ml-2 text-white font-bold text-xl hidden md:block"><span class="text-red-500"></span></span>
+        </a>
 
-   <section class="bg-gradient-to-r from-purple-100 via-white to-yellow-50 py-20 px-4" id="about">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+        <!-- Desktop Navigation -->
+        <ul class="hidden md:flex space-x-4 md:space-x-6 text-base md:text-lg font-medium text-white">
+          <li><a href="#" class="hover:text-red-500 transition">Bosh sahifa</a></li>
+          <li><a href="#courses" class="hover:text-red-500 transition">Kurslar</a></li>
+          <li><a href="#signup" class="hover:text-red-500 transition">Ro‘yxatdan o‘tish</a></li>
+          <li><a href="#certificates" class="hover:text-red-500 transition">Sertifikatlar</a></li>
+          <li><a href="#contact" class="hover:text-red-500 transition">Aloqa</a></li>
+        </ul>
 
-   <!-- Matn qismi -->
-<div>
-  <h2 class="text-4xl md:text-5xl font-bold mb-6">Nega aynan Start21?</h2>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-white">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
 
-  <p class="text-lg md:text-xl text-gray-800 mb-2">
-    Start21 — bu Ingliz tili va SAT bo‘yicha yuqori natijalarni maqsad qilgan o‘quv markazi.
-  </p>
+    <!-- Mobile Navigation -->
+    <div id="mobile-nav" class="mobile-nav">
+      <div class="flex justify-between items-center px-4 py-3 border-b border-gray-700">
+        <div class="flex items-center">
+          <img src="images/logo.jpg" alt="Start21 logo" class="h-8" />
+          <span class="ml-2 text-white font-bold text-xl"><span class="text-red-500"></span></span>
+        </div>
+        <button id="close-menu-btn" class="text-white">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
 
-  <p class="text-lg md:text-xl text-gray-800 mb-2">
-     SAT va IELTS kurslarimiz xalqaro standartlarga mos ravishda tuzilgan bo‘lib, darslar tajribali ustozlar tomonidan olib boriladi.
-  </p>
+      <ul class="py-6 space-y-2">
+        <li>
+          <a href="#" class="block py-4 px-6 text-white border-b border-gray-700 hover:bg-gray-800 transition">Bosh sahifa</a>
+        </li>
+        <li>
+          <a href="#courses" class="block py-4 px-6 text-white border-b border-gray-700 hover:bg-gray-800 transition">Kurslar</a>
+        </li>
+        <li>
+          <a href="#signup" class="block py-4 px-6 text-white border-b border-gray-700 hover:bg-gray-800 transition">Ro‘yxatdan o‘tish</a>
+        </li>
+        <li>
+          <a href="#certificates" class="block py-4 px-6 text-white border-b border-gray-700 hover:bg-gray-800 transition">Sertifikatlar</a>
+        </li>
+        <li>
+          <a href="#contact" class="block py-4 px-6 text-white border-b border-gray-700 hover:bg-gray-800 transition">Aloqa</a>
+        </li>
+      </ul>
 
-  <p class="text-lg md:text-xl text-gray-800 mb-2">
-     Har bir o‘quvchiga shaxsiy mentor biriktiriladi. Ustozlar nafaqat bilim beradi, balki o‘quvchining har bir bosqichdagi rivojlanishini kuzatib boradi.
-  </p>
-
-  <p class="text-lg md:text-xl text-gray-800 mb-2">
-     Bizda o‘quvchilar qisqa muddatda sezilarli natijalarga erishmoqda: SAT bo‘yicha 1400+ va IELTS bo‘yicha 7.5+ ball olish — bu bizda oddiy holat.
-  </p>
-
-  <p class="text-lg md:text-xl text-gray-800">
-     <strong>Study smarter, Not harder!</strong>
-  </p>
-</div>
-
-
-  <!-- Video qismi -->
-<div class="w-full max-w-3xl mx-auto aspect-video rounded-xl overflow-hidden shadow-xl">
-  <iframe
-    class="w-full h-full"
-    src="https://www.youtube.com/embed/w-Im94Hf6ck"
-    title="Nega aynan Start21?"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-
-
-  </div>
-</section>
-
-<section id="courses" class="bg-gray-50 py-20">
-  <h2 class="text-4xl font-bold text-center mb-12">Kurslarimiz</h2>
-
-  <div class="swiper courseSwiper max-w-7xl mx-auto px-4">
-    <div class="swiper-wrapper">
-
-<!-- Kurs 1 -->
-<div class="swiper-slide bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
-  <h4 class="text-xl font-bold mb-3">General English</h4>
-  <p class="mb-2">For those who want to learn English from 0 to an Intermediate level.</p>
-  <ul class="list-disc list-inside text-sm space-y-1">
-    <li><strong>Price:</strong> 780,000 UZS</li>
-    <li>13–18 students per group</li>
-    <li>Lessons focused on speaking</li>
-    <li>Co-working spaces</li>
-    <li>Free books</li>
-    <li>Teachers with IELTS scores of 8.0 / 8.5 / 9.0</li>
-    <li>Second teacher included for free</li>
-    <li>3 times a week, <span class="font-semibold">1 hour 45 minutes</span> per lesson</li>
-  </ul>
-</div>
-
-<!-- Kurs 2 -->
-<div class="swiper-slide bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
-  <h4 class="text-xl font-bold mb-3">IELTS Novice</h4>
-  <p class="mb-2">For those who want to improve from an Intermediate level to the IELTS level.</p>
-  <ul class="list-disc list-inside text-sm space-y-1">
-    <li><strong>Price:</strong> 840,000 UZS</li>
-    <li>13–18 students per group</li>
-    <li>Lessons focused on speaking</li>
-    <li>Co-working spaces</li>
-    <li>Free books</li>
-    <li>Teachers with IELTS scores of 8.0 / 8.5 / 9.0</li>
-    <li>Second teacher included for free</li>
-    <li>3 times a week, <span class="font-semibold">1 hour 45 minutes</span> per lesson</li>
-  </ul>
-</div>
-
-<!-- Kurs 3 -->
-<div class="swiper-slide bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
-  <h4 class="text-xl font-bold mb-3">IELTS Advanced</h4>
-  <p class="mb-2">
-    Admission starts from at least <strong>B2+ level</strong>! We test and then place students into suitable groups.
-  </p>
-  <ul class="list-disc list-inside text-sm space-y-1">
-    <li><strong>Price:</strong> 840,000 UZS</li>
-    <li>13–18 students per group</li>
-    <li>Lessons focused on speaking</li>
-    <li>Co-working spaces</li>
-    <li>Free books</li>
-    <li>Teachers with IELTS scores of 8.0 / 8.5 / 9.0</li>
-    <li>Second teacher included for free</li>
-    <li>3 times a week, <span class="font-semibold">1 hour 45 minutes</span> per lesson</li>
-  </ul>
-</div>
-
-<!-- Kurs 3 -->
-<div class="swiper-slide bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
-  <h4 class="text-xl font-bold mb-3">IELTS Advanced</h4>
-  <p class="mb-2">
-    Admission starts from at least <strong>B2+ level</strong>! We test and then place students into suitable groups.
-  </p>
-  <ul class="list-disc list-inside text-sm space-y-1">
-    <li><strong>Price:</strong> 840,000 UZS</li>
-    <li>13–18 students per group</li>
-    <li>Lessons focused on speaking</li>
-    <li>Co-working spaces</li>
-    <li>Free books</li>
-    <li>Teachers with IELTS scores of 8.0 / 8.5 / 9.0</li>
-    <li>Second teacher included for free</li>
-    <li>3 times a week, <span class="font-semibold">1 hour 45 minutes</span> per lesson</li>
-  </ul>
-</div>
-
-
+      <div class="px-6 py-4">
+        <div class="flex space-x-5 justify-center">
+          <a href="https://t.me/effortless_education" class="text-white text-2xl hover:text-blue-400 transition">
+            <i class="fab fa-telegram"></i>
+          </a>
+          <a href="http://instagram.com/start21.lc" class="text-white text-2xl hover:text-pink-500 transition">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="tel:+998781137310" class="text-white text-2xl hover:text-green-400 transition">
+            <i class="fas fa-phone"></i>
+          </a>
+          <a href="https://youtube.com/@Start21" class="text-white text-2xl hover:text-red-500 transition">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="swiper-pagination mt-6"></div>
-  </div>
-</section>
 
-<!-- SwiperJS styles -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <!-- Hero Section -->
+    <section class="relative text-black text-center py-20 md:py-32 px-6" style="background-image: url('images/logo_big_start21.jpg'); background-size: cover; background-position: center;">
 
-<!-- Sertifikatlar Slaydi -->
-<section id="certificates" class="bg-white py-20">
+      <div class="absolute inset-0 bg-black opacity-30"></div>
+      <div class="relative z-10 max-w-3xl mx-auto">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">Kel, O'qi, Yuksal</h1>
+        <p class="text-lg md:text-xl mb-8 text-white max-w-2xl mx-auto">Ingliz tilini o‘rganish uchun eng yaxshi joy! Xalqaro standartdagi ta'lim va yuqori natijalar</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#signup" class="inline-block bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-red-700 transition transform hover:-translate-y-1">Kursga yozilish</a>
+          <a href="#courses" class="inline-block bg-white text-gray-800 px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-gray-100 transition transform hover:-translate-y-1">Kurslarni ko'rish</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="bg-gradient-to-r from-purple-50 via-white to-yellow-50 py-12 md:py-20 px-4" id="about">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">Nega aynan <span class="text-red-600">Start21</span>?</h2>
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                  <i class="fas fa-check text-red-600"></i>
+                </div>
+              </div>
+              <p class="ml-3 text-gray-700">
+                <span class="font-semibold">Xalqaro standartdagi ta'lim:</span> SAT va IELTS kurslarimiz xalqaro standartlarga mos ravishda tuzilgan
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                  <i class="fas fa-check text-red-600"></i>
+                </div>
+              </div>
+              <p class="ml-3 text-gray-700">
+                <span class="font-semibold">Shaxsiy mentor:</span> Har bir o‘quvchiga shaxsiy mentor biriktiriladi
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                  <i class="fas fa-check text-red-600"></i>
+                </div>
+              </div>
+              <p class="ml-3 text-gray-700">
+                <span class="font-semibold">Yuqori natijalar:</span> O'quvchilarimiz IELTS 7.5+ va SAT 1400+ ballarni qo'lga kiritishadi
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                  <i class="fas fa-check text-red-600"></i>
+                </div>
+              </div>
+              <p class="ml-3 text-gray-700">
+                <span class="font-semibold">Zamonaviy resurslar:</span> Barcha o'quv materiallari va kitoblar bepul taqdim etiladi
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+            <p class="text-gray-800">
+              <i class="fas fa-quote-left text-blue-400 mr-2"></i>
+              <span class="font-medium">Study smarter, Not harder!</span> Bizning o'quv metodimiz sizga qisqa vaqtda maksimal natijalarga erishish imkonini beradi.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- Video qismi -->
+        <div class="w-full max-w-3xl mx-auto aspect-video rounded-xl overflow-hidden shadow-xl">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/w-Im94Hf6ck"
+            title="Nega aynan Start21?"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+    <!-- Kurslar bo'limi -->
+    <section id="courses" class="bg-gray-50 py-12 md:py-20">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Kurslarimiz</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Har bir daraja va ehtiyojga mos kurslarimiz. O'zingizga mosini tanlang va ingliz tilini mukammal o'rganing</p>
+        </div>
+
+        <div class="swiper courseSwiper">
+          <div class="swiper-wrapper">
+
+
+            <!-- Yangi Kurs 5: 7 Oylik CEFR -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                  <div class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold inline-block mb-4">Yangi</div>
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">7 Oylik CEFR</h4>
+                <p class="mb-4 text-gray-700">CEFR standartlari bo'yicha intensiv o'quv kursi</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">1,050,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>10-14 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>7 oylik intensiv kurs</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Xalqaro standartdagi sertifikat</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Bepul qo'llanmalar va materiallar</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yangi Kurs 6: Ingliz tili (Bosqichlar) -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">Ingliz tili (Bosqichlar)</h4>
+                <p class="mb-4 text-gray-700">Bosqichma-bosqich ingliz tilini o'rganish kursi</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">850,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>12-16 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Boshlang'ichdan yuqori darajagacha</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Har bosqich uchun alohida o'quv dasturi</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Har 3 oyda progress testlari</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yangi Kurs 7: Exam (Imtihon) -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">Exam (Imtihon)</h4>
+                <p class="mb-4 text-gray-700">Xalqaro imtihonlarga tayyorlov kursi</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">900,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>8-12 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>IELTS, TOEFL, SAT imtihonlari uchun</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Haqiqiy imtihon sharoitida mashqlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Imtihon strategiyalari va vaqt boshqaruvi</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yangi Kurs 8: Intensive IELTS -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                     <div class="bg-red-600 text-white px-4 py-1 rounded-full text-sm font-semibold inline-block mb-4">Eng mashhur</div>
+
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">Intensive IELTS</h4>
+                <p class="mb-4 text-gray-700">IELTS imtihoniga tezkor tayyorlov kursi</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">1,100,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>6-10 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Kundalik intensiv darslar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>3 oyda IELTSga tayyorlov</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>IELTS 8.0+ balli o'qituvchilar</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yangi Kurs 9: SAT -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">SAT</h4>
+                <p class="mb-4 text-gray-700">Amerika universitetlariga kirish imtihoniga tayyorlov</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">1,150,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>8-12 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Matematika, Reading va Writing bo'limlari</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Real testlar va misollar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>1400+ ballga kafolat</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yangi Kurs 10: Rus tili -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">Rus tili</h4>
+                <p class="mb-4 text-gray-700">Rus tilini noldan boshlab o'rganish kursi</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">750,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>12-16 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Gapirish, o'qish, yozish va eshitish</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Rus madaniyati va adabiyoti</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>TRKI (TORFL) sertifikatiga tayyorlov</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yangi Kurs 11: DTM fanlari -->
+            <div class="swiper-slide">
+              <div class="bg-white p-5 md:p-6 rounded-lg shadow course-card h-full">
+                <h4 class="text-xl md:text-2xl font-bold mb-3 text-gray-900">DTM fanlari</h4>
+                <p class="mb-4 text-gray-700">DTM imtihonlari uchun maxsus tayyorlov kursi</p>
+                <ul class="space-y-2 mb-6">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Narxi: <span class="font-semibold">800,000 so'm</span> oyiga</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>10-14 kishilik guruhlar</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Matematika, Fizika, Kimyo, Biologiya</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Ona tili va Adabiyot</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Test yechish texnikasi va strategiyalari</span>
+                  </li>
+                </ul>
+                <div class="mt-auto">
+                  <a href="#signup" class="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-lg font-medium transition">Ro'yxatdan o'tish</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination mt-6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sertifikatlar Slaydi -->
+<section id="certificates" class="bg-white py-12 md:py-20">
   <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-4xl font-bold text-center mb-12">Bizning Sertifikatlarimiz</h2>
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Bizning Sertifikatlarimiz</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">O'quvchilarimizning erishgan yuqori natijalari</p>
+    </div>
 
-    <div class="swiper certSwiper pb-16">
+    <div class="swiper certSwiper pb-10 md:pb-16">
       <div class="swiper-wrapper">
-
         <!-- Sertifikat 1 -->
-        <div class="swiper-slide bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center">
-          <img src="images/ielts1.jpg" alt="IELTS Sertifikat"
-               class="rounded mb-4 w-full h-[280px] object-contain" />
-          <h4 class="text-xl font-semibold mb-2 text-center">IELTS Completion Certificate</h4>
-          <p class="text-sm text-gray-700 text-center whitespace-pre-line">
-            🎯 Score: IELTS 7.0<br>
-            👨🏻‍💻 Student: Alisherbek<br>
-            🧩 Course: IELTS
-          </p>
+        <div class="swiper-slide">
+          <div class="bg-gray-50 p-5 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center h-full">
+            <img src="images/ielts1.jpg" alt="IELTS Sertifikat" class="rounded mb-4 w-full h-[200px] md:h-[280px] object-contain" />
+            <h4 class="text-lg md:text-xl font-semibold mb-2 text-center">IELTS Completion Certificate</h4>
+            <p class="text-xs md:text-sm text-gray-700 text-center whitespace-pre-line">
+              🎯 Score: IELTS 7.5<br>
+              👨🏻‍💻 Student: Azizbek<br>
+              🧩 Course: IELTS
+            </p>
+          </div>
         </div>
 
         <!-- Sertifikat 2 -->
-        <div class="swiper-slide bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center">
-          <img src="images/ielts3.jpg" alt="Speaking Sertifikat"
-               class="rounded mb-4 w-full h-[280px] object-contain" />
-          <h4 class="text-xl font-semibold mb-2 text-center">English Speaking Mastery</h4>
-          <p class="text-sm text-gray-700 text-center whitespace-pre-line">
-            🎯 Score: IELTS 7.0<br>
-            👨🏻‍💻 Student: Alisherbek<br>
-            🧩 Course: IELTS
-          </p>
+        <div class="swiper-slide">
+          <div class="bg-gray-50 p-5 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center h-full">
+            <img src="images/ielts2.jpg" alt="Speaking Sertifikat" class="rounded mb-4 w-full h-[200px] md:h-[280px] object-contain" />
+            <h4 class="text-lg md:text-xl font-semibold mb-2 text-center">IELTS Completion Certificate</h4>
+            <p class="text-xs md:text-sm text-gray-700 text-center whitespace-pre-line">
+              🎯 Score: IELTS 7.0<br>
+              👨🏻‍💻 Student: Suhrobjon<br>
+              🧩 Course: IELTS
+            </p>
+          </div>
         </div>
 
-        <!-- Sertifikat 3 -->
-        <div class="swiper-slide bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center">
-          <img src="images/ielts2.jpg" alt="Grammar Sertifikat"
-               class="rounded mb-4 w-full h-[280px] object-contain" />
-          <h4 class="text-xl font-semibold mb-2 text-center">English Grammar Expert</h4>
-          <p class="text-sm text-gray-700 text-center whitespace-pre-line">
-            🎯 Score: IELTS 7.0<br>
-            👨🏻‍💻 Student: Alisherbek<br>
-            🧩 Course: IELTS
-          </p>
-        </div>
-<!-- Sertifikat 3 -->
-        <div class="swiper-slide bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center">
-          <img src="images/ielts2.jpg" alt="Grammar Sertifikat"
-               class="rounded mb-4 w-full h-[280px] object-contain" />
-          <h4 class="text-xl font-semibold mb-2 text-center">English Grammar Expert</h4>
-          <p class="text-sm text-gray-700 text-center whitespace-pre-line">
-            🎯 Score: IELTS 7.0<br>
-            👨🏻‍💻 Student: Alisherbek<br>
-            🧩 Course: IELTS
-          </p>
+
+        <!-- Sertifikat 2 -->
+        <div class="swiper-slide">
+          <div class="bg-gray-50 p-5 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center h-full">
+            <img src="images/sat.jpg" alt="Speaking Sertifikat" class="rounded mb-4 w-full h-[200px] md:h-[280px] object-contain" />
+            <h4 class="text-lg md:text-xl font-semibold mb-2 text-center">IELTS Completion Certificate</h4>
+            <p class="text-xs md:text-sm text-gray-700 text-center whitespace-pre-line">
+              🎯 Score: SAT 1440<br>
+              👨🏻‍💻 Student: Jaloliddin<br>
+              🧩 Course: SAT
+            </p>
+          </div>
         </div>
 
+
+        <!-- Sertifikat 4 -->
+        <div class="swiper-slide">
+          <div class="bg-gray-50 p-5 rounded-lg shadow hover:shadow-xl transition flex flex-col items-center h-full">
+            <img src="images/ielts4.jpg" alt="IELTS Sertifikat" class="rounded mb-4 w-full h-[200px] md:h-[280px] object-contain" />
+            <h4 class="text-lg md:text-xl font-semibold mb-2 text-center">IELTS Completion Certificate</h4>
+            <p class="text-xs md:text-sm text-gray-700 text-center whitespace-pre-line">
+              🎯 Score: IELTS 7.5<br>
+              👨🏻‍💻 Student: <br>
+              👨🏻‍💻 Student: Dilnavoz<br>
+              🧩 Course: IELTS
+            </p>
+          </div>
+        </div>
       </div>
       <div class="swiper-pagination mt-6"></div>
     </div>
   </div>
 </section>
 
-   <!-- Statistika / Faktlar bo‘limi -->
-<section class="bg-gray-50 py-20" id="stats">
-  <div class="max-w-6xl mx-auto px-4">
-    <!-- Sarlavha -->
-    <h2 class="text-3xl font-bold text-center mb-12">Bizning Statistika</h2>
 
-    <!-- Kartochkalar -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
-
-      <!-- Card 1 -->
-      <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 relative">
-        <span class="absolute top-4 right-4 w-3 h-3 bg-sky-400 rounded-full"></span>
-        <h2 class="text-4xl font-bold text-gray-900 mb-2">9+</h2>
-        <p class="text-sm text-gray-600">yillik tajriba</p>
+    <!-- Statistika bo'limi -->
+    <section class="bg-gradient-to-r from-blue-900 to-purple-800 py-12 md:py-20 text-white" id="stats">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Bizning Ko'rsatkichlarimiz</h2>
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6 text-center">
+          <!-- Card 1 -->
+          <div class="bg-white bg-opacity-10 p-6 rounded-2xl shadow-md stat-card">
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">10+</h2>
+            <p class="text-sm md:text-base">yillik tajriba</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="bg-white bg-opacity-10 p-6 rounded-2xl shadow-md stat-card">
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">10,000+</h2>
+            <p class="text-sm md:text-base">o'quvchi</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="bg-white bg-opacity-10 p-6 rounded-2xl shadow-md stat-card">
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">4</h2>
+            <p class="text-sm md:text-base">filial</p>
+          </div>
+          <!-- Card 4 -->
+          <div class="bg-white bg-opacity-10 p-6 rounded-2xl shadow-md stat-card">
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">97%</h2>
+            <p class="text-sm md:text-base">mamnun mijozlar</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Card 2 -->
-      <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 relative">
-        <span class="absolute top-4 right-4 w-3 h-3 bg-red-500 rounded-full"></span>
-        <h2 class="text-4xl font-bold text-gray-900 mb-2">50,000+</h2>
-        <p class="text-sm text-gray-600">Ingliz tilini o‘rgangan yoshlar</p>
+    <!-- Alpine.js ulanishi -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- O‘qituvchilar bo‘limi (Sizning asl versiyangiz) -->
+    <section class="bg-[#f3f4f6] py-12 md:py-20" id="teachers" x-data="teachersComponent()">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Bizning O‘qituvchilar</h2>
+
+        <!-- O‘qituvchi tanlash -->
+        <div class="flex justify-center items-center mb-6 md:mb-10 flex-wrap gap-2 md:gap-4">
+          <template x-for="(teacher, index) in teachers" :key="index">
+            <button
+              @click="selectTeacher(index)"
+              class="flex items-center space-x-2 px-3 py-2 rounded-full border shadow-sm text-xs md:text-sm font-semibold transition teacher-btn"
+              :class="selected === index ? 'bg-white text-blue-600 ring-2 ring-blue-400' : 'bg-gray-100 text-gray-700 hover:text-red-600'">
+              <img :src="teacher.avatar" class="w-6 h-6 md:w-8 md:h-8 rounded-full border" alt="avatar" />
+              <div class="text-left">
+                <span x-text="teacher.name"></span><br>
+                <span class="text-xs text-gray-500" x-text="'IELTS ' + teacher.score"></span>
+              </div>
+            </button>
+          </template>
+        </div>
+
+        <!-- O‘qituvchi ma'lumotlari -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center mt-6 md:mt-8">
+          <div class="flex justify-center">
+            <img :src="teachers[selected].image" alt="Ustoz rasmi" class="rounded-xl shadow-lg max-w-xs w-full" />
+          </div>
+          <div>
+            <div class="grid grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 text-center">
+              <div>
+                <h3 class="text-xl md:text-2xl font-bold" x-text="teachers[selected].score"></h3>
+                <p class="text-xs md:text-sm text-gray-600">IELTS bal</p>
+              </div>
+              <div>
+                <h3 class="text-xl md:text-2xl font-bold" x-text="teachers[selected].certificate || '-'"></h3>
+                <p class="text-xs md:text-sm text-gray-600">Sertifikati</p>
+              </div>
+              <div>
+                <h3 class="text-xl md:text-2xl font-bold" x-text="teachers[selected].experience"></h3>
+                <p class="text-xs md:text-sm text-gray-600">Yil tajriba</p>
+              </div>
+              <div>
+                <h3 class="text-xl md:text-2xl font-bold" x-text="teachers[selected].students"></h3>
+                <p class="text-xs md:text-sm text-gray-600">O‘quvchilar</p>
+              </div>
+            </div>
+            <p class="text-xs md:text-sm text-gray-700 leading-relaxed" x-text="teachers[selected].quote"></p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Card 3 -->
-      <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 relative">
-        <span class="absolute top-4 right-4 w-3 h-3 bg-orange-400 rounded-full"></span>
-        <h2 class="text-4xl font-bold text-gray-900 mb-2">14</h2>
-        <p class="text-sm text-gray-600">O‘zbekiston bo‘ylab filiallar</p>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 relative">
-        <span class="absolute top-4 right-4 w-3 h-3 bg-green-500 rounded-full"></span>
-        <h2 class="text-4xl font-bold text-gray-900 mb-2">500+</h2>
-        <p class="text-sm text-gray-600">Cambridgedagi xodimlar</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- Alpine.js ulanishi -->
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-<!-- O‘qituvchilar bo‘limi -->
-<section class="bg-[#f3f4f6] py-20" id="teachers" x-data="teachersComponent()">
+   <!-- Yangi qism: Fotogalereya (o'quv markazdan fotolar) -->
+<section class="bg-white py-12 md:py-20" id="gallery">
   <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12">Bizning O‘qituvchilar</h2>
-
-    <!-- O‘qituvchi tanlash -->
-    <div class="flex justify-center items-center mb-10 flex-wrap gap-4">
-      <template x-for="(teacher, index) in teachers" :key="index">
-        <button
-          @click="selectTeacher(index)"
-          class="flex items-center space-x-2 px-4 py-2 rounded-full border shadow-sm text-sm font-semibold transition"
-          :class="selected === index ? 'bg-white text-blue-600 ring-2 ring-blue-400' : 'bg-gray-100 text-gray-700 hover:text-red-600'">
-          <img :src="teacher.avatar" class="w-8 h-8 rounded-full border" alt="avatar" />
-          <div class="text-left">
-            <span x-text="teacher.name"></span><br>
-            <span class="text-xs text-gray-500" x-text="'IELTS ' + teacher.score"></span>
-          </div>
-        </button>
-      </template>
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">O'quv Markazimizdan Fotolar</h2>
+      <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto text-lg">O'quv jarayoni, sinf xonalari va tadbirlarimizdan lavhalar</p>
     </div>
 
-    <!-- O‘qituvchi ma'lumotlari -->
-    <div class="grid md:grid-cols-2 gap-10 items-center mt-8">
-      <div class="flex justify-center">
-        <img :src="teachers[selected].image" alt="Ustoz rasmi" class="rounded-xl shadow-lg max-w-xs" />
-      </div>
-      <div>
-        <div class="grid grid-cols-2 gap-6 mb-6 text-center">
-          <div>
-            <h3 class="text-2xl font-bold" x-text="teachers[selected].score"></h3>
-            <p class="text-sm text-gray-600">IELTS bal</p>
-          </div>
-          <div>
-            <h3 class="text-2xl font-bold" x-text="teachers[selected].certificate || '-'"></h3>
-            <p class="text-sm text-gray-600">Sertifikati</p>
-          </div>
-          <div>
-            <h3 class="text-2xl font-bold" x-text="teachers[selected].experience"></h3>
-            <p class="text-sm text-gray-600">Yil tajriba</p>
-          </div>
-          <div>
-            <h3 class="text-2xl font-bold" x-text="teachers[selected].students"></h3>
-            <p class="text-sm text-gray-600">O‘quvchilar</p>
-          </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Foto 1 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto1.jpg" alt="O'quv sinfi"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">O'quv sinfi</h3>
         </div>
-        <p class="text-sm text-gray-700 leading-relaxed" x-text="teachers[selected].quote"></p>
+      </div>
+
+      <!-- Foto 2 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto2.jpg" alt="Dars jarayoni"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">Kutubxona</h3>
+        </div>
+      </div>
+
+      <!-- Foto 3 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto3.jpg" alt="Tadbirlar"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">Tadbirlar</h3>
+        </div>
+      </div>
+
+      <!-- Foto 4 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto4.jpg" alt="O'quvchilar"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">O'quvchilar</h3>
+        </div>
+      </div>
+
+      <!-- Foto 5 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto5.jpg" alt="Kutubxona"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">Final</h3>
+        </div>
+      </div>
+
+      <!-- Foto 6 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto6.jpg" alt="O'qituvchilar"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">IELTS topshiruvchilar</h3>
+        </div>
+      </div>
+
+      <!-- Foto 7 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto7.jpg" alt="Imtihonlar"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">Faxrli o'quvchilarimiz</h3>
+        </div>
+      </div>
+
+      <!-- Foto 8 -->
+      <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-64">
+        <img src="images/foto8.jpg" alt="Mukofotlar"
+             class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <h3 class="text-white text-xl font-semibold">Mukofotlar</h3>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<script>
-  function teachersComponent() {
-    return {
-      selected: 0,
-      teachers: [
-        {
-          name: "Dovudxon",
-          score: "9.0",
-          certificate: "CELTA",
-          experience: "10+",
-          students: "3500+",
-          image: "images/teacher1.jpg",
-          avatar: "images/teacher1.jpg",
-          quote: "O‘zbekistonda 8-bo‘lib IELTS 9.0 ballni qo‘lga kiritganman va bu o‘zimga bo‘lgan ishonchni yanada orttirgan. O‘quvchilarim yaxshi natijaga chiqishlari uchun barcha bo‘limlarga e’tibor beraman."
-        },
-        {
-          name: "Asilbek",
-          score: "3x9.0",
-          certificate: "CELTA",
-          experience: "5+",
-          students: "3000+",
-          image: "images/teacher3.jpg",
-          avatar: "images/teacher3.jpg",
-          quote: "Ketma-ket 3 marta IELTS 9.0 natijani qo‘lga kiritganman. Imkonsiz degan gap men uchun emas."
-        },
-        {
-          name: "Zarnigor",
-          score: "8.5",
-          certificate: "CELTA",
-          experience: "2 yil",
-          students: "500+",
-          image: "images/teacher2.jpg",
-          avatar: "images/teacher2.jpg",
-          quote: "17 yoshimda IELTS topshirganman va birinchi urinishda 8.0 ballni olganman."
-        },
-        {
-          name: "Adhambek",
-          score: "8.5",
-          certificate: "CELTA",
-          experience: "3+",
-          students: "700+",
-          image: "images/teacher4.jpg",
-          avatar: "images/teacher4.jpg",
-          quote: "Oliy maqsadim o‘quvchilarga ingliz tili orqali imkoniyat eshiklarini ochish."
-        }
-      ],
-      selectTeacher(index) {
-        this.selected = index;
-      }
-    };
-  }
-</script>
-
-<!-- SwiperJS CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
-<section class="bg-white py-20" id="branches">
-  <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-10">Bizning Filiallar</h2>
-
-    <!-- Swiper container -->
-    <div class="swiper mySwiper pb-20 relative">
-      <div class="swiper-wrapper">
-
-        <!-- Filial 1 -->
-        <div class="swiper-slide">
-          <div class="bg-[#0f172a] text-white p-4 rounded-xl shadow-md h-full">
-            <h3 class="text-lg font-semibold mb-3">Integro filiali</h3>
-            <iframe src="https://yandex.com/map-widget/v1/-/CCUQnNcQTA"
-                    width="100%" height="200"
-                    class="rounded-lg mb-4"
-                    loading="lazy"
-                    allowfullscreen></iframe>
-          </div>
-        </div>
-
-        <!-- Filial 2 -->
-        <div class="swiper-slide">
-          <div class="bg-[#0f172a] text-white p-4 rounded-xl shadow-md h-full">
-            <h3 class="text-lg font-semibold mb-3">Xalqlar do‘stligi filiali</h3>
-            <iframe src="https://yandex.com/map-widget/v1/-/CCUQnNsUSC"
-                    width="100%" height="200"
-                    class="rounded-lg mb-4"
-                    loading="lazy"
-                    allowfullscreen></iframe>
-          </div>
-        </div>
-
-        <!-- Filial 3 -->
-        <div class="swiper-slide">
-          <div class="bg-[#0f172a] text-white p-4 rounded-xl shadow-md h-full">
-            <h3 class="text-lg font-semibold mb-3">Amir Temur filiali</h3>
-            <iframe src="https://yandex.com/map-widget/v1/-/CCUQnNv7HA"
-                    width="100%" height="200"
-                    class="rounded-lg mb-4"
-                    loading="lazy"
-                    allowfullscreen></iframe>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ✅ Pagination: slayder pastida joylashgan -->
-      <div class="swiper-pagination absolute bottom-0 left-0 w-full text-center"></div>
+    <!-- Ko'proq ko'rish tugmasi -->
+    <div class="text-center mt-12">
+      <button class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg">
+        Barcha rasmlarni ko'rish
+      </button>
     </div>
   </div>
 </section>
 
+  <!-- Filiallar uchun swiper -->
+<div class="swiper branchSwiper pb-12 md:pb-16">
+  <div class="swiper-wrapper">
 
-
-        <!-- Yana filiallar bo‘lsa davom ettiring... -->
-
+    <!-- 1. Davlatobod filiali -->
+    <div class="swiper-slide">
+      <div class="bg-white p-5 rounded-xl shadow branch-card h-full">
+        <h3 class="text-lg font-bold mb-4">Davlatobod filiali</h3>
+        <div class="rounded-xl overflow-hidden w-full h-48 mb-4">
+          <!-- OpenStreetMap alternativasi (API kerak emas) -->
+<iframe
+  width="100%"
+  height="400"
+  frameborder="0"
+  scrolling="no"
+  marginheight="0"
+  marginwidth="0"
+  src="https://www.openstreetmap.org/export/embed.html?bbox=71.602%2C40.991%2C71.612%2C40.996&layer=mapnik&marker=40.993877%2C71.607723"
+  style="border: 1px solid #ccc; border-radius: 8px;">
+</iframe>
+<br/>
+<small>
+  <a href="https://www.openstreetmap.org/?mlat=40.993877&amp;mlon=71.607723#map=17/40.993877/71.607723" target="_blank">
+    Kattaroq xaritada ko'rish
+  </a>
+</small>        </div>
+        <ul class="space-y-2 text-sm">
+          <li class="flex">
+            <i class="fas fa-map-marker-alt text-red-500 mt-1 mr-2"></i>
+            <span>Mirzo Ulug'bek tumani, Bobur ko'chasi 45</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-phone text-red-500 mt-1 mr-2"></i>
+            <span>+998 71 200 12 34</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-clock text-red-500 mt-1 mr-2"></i>
+            <span>Dushanba-Shanba: 8:00 - 20:00</span>
+          </li>
+        </ul>
       </div>
-
-      <!-- Navigatsiya -->
-      <div class="swiper-pagination mt-6"></div>
     </div>
-  </div>
-</section>
 
+    <!-- 2. Samarqand filiali -->
+    <div class="swiper-slide">
+      <div class="bg-white p-5 rounded-xl shadow branch-card h-full">
+        <h3 class="text-lg font-bold mb-4">Samarqand filiali</h3>
+        <div class="rounded-xl overflow-hidden w-full h-48 mb-4">
+          <!-- OpenStreetMap alternativasi (API kerak emas) -->
+<iframe
+  width="100%"
+  height="400"
+  frameborder="0"
+  scrolling="no"
+  marginheight="0"
+  marginwidth="0"
+  src="https://www.openstreetmap.org/export/embed.html?bbox=71.6700%2C41.0020%2C71.6800%2C41.0060&layer=mapnik&marker=41.0044131%2C71.6751480">
+</iframe>
 
-<!-- Ro‘yxatdan o‘tish formasi va aloqa -->
-<section id="signup" class="bg-gray-100 py-20 px-4">
-  <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-10">
-    <h2 class="text-3xl font-bold text-center mb-12">Kursga yoziling yoki biz bilan bog‘laning</h2>
-
-    <div class="grid md:grid-cols-2 gap-8">
-
-      <!-- Forma qismi -->
-      <div class="bg-gray-50 p-6 rounded-xl shadow-inner">
-        <h3 class="text-xl font-semibold text-center mb-6">Kursga Ro‘yxatdan o‘tish</h3>
-
-        <form id="signup-form" class="space-y-4">
-          <input type="text" name="name" placeholder="Ismingiz" required class="w-full border p-2 rounded" />
-          <input type="tel" name="phone" placeholder="Telefon raqamingiz" required class="w-full border p-2 rounded" />
-          <select name="course" class="w-full border p-2 rounded" required>
-            <option value="">Kursni tanlang</option>
-            <option value="IELTS tayyorlov">IELTS tayyorlov</option>
-            <option value="TOPIK">TOPIK</option>
-            <option value="Beginner English">Beginner English</option>
-          </select>
-          <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 w-full">Yuborish</button>
-        </form>
-
-        <p id="response" class="mt-4 text-sm text-green-600 text-center hidden">✅ Yuborildi! Tez orada siz bilan bog‘lanamiz.</p>
+        </div>
+        <ul class="space-y-2 text-sm">
+          <li class="flex">
+            <i class="fas fa-map-marker-alt text-red-500 mt-1 mr-2"></i>
+            <span>Chorsu Korzinka 2-qavati</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-phone text-red-500 mt-1 mr-2"></i>
+            <span>+998 66 233 55 77</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-clock text-red-500 mt-1 mr-2"></i>
+            <span>Dushanba-Shanba: 8:00 - 20:00</span>
+          </li>
+        </ul>
       </div>
+    </div>
 
-      <!-- Aloqa qismi -->
-      <div class="bg-white p-6 rounded-xl border shadow-sm">
-  <h3 class="text-xl font-semibold mb-6">Biz bilan bog‘laning</h3>
-  <ul class="space-y-4 text-sm text-gray-700">
-    <li><i class="fas fa-map-marker-alt text-red-600 mr-2"></i> Start21 O‘quv Markazi, Namangan</li>
-    <li><i class="fas fa-phone-alt text-green-600 mr-2"></i> +998 97 216 33 33</li>
-    <li><i class="fab fa-telegram text-blue-500 mr-2"></i>
-      Telegram: <a href="https://t.me/effortless_education" class="text-blue-600 hover:underline">@start21edu</a>
-    </li>
-    <li><i class="fab fa-instagram text-pink-500 mr-2"></i>
-      Instagram: <a href="https://instagram.com/effortless_education" class="text-pink-600 hover:underline">@start21edu</a>
-    </li>
-    <li><i class="fab fa-youtube text-red-600 mr-2"></i>
-      YouTube: <a href="https://youtube.com/@effortless_education" class="text-red-600 hover:underline">@effortless_education</a>
-    </li>
-    <li><i class="fas fa-envelope text-yellow-500 mr-2"></i>
-      Email: <a href="mailto:info@start21.uz" class="text-red-600 hover:underline">info@start21.uz</a>
-    </li>
-  </ul>
+      <!-- 2. Samarqand filiali -->
+    <div class="swiper-slide">
+      <div class="bg-white p-5 rounded-xl shadow branch-card h-full">
+        <h3 class="text-lg font-bold mb-4">Samarqand filiali</h3>
+        <div class="rounded-xl overflow-hidden w-full h-48 mb-4">
+          <!-- OpenStreetMap alternativasi (API kerak emas) -->
+<iframe
+  src="https://www.openstreetmap.org/export/embed.html?bbox=69.240562,41.311081,69.250000,41.320000&layer=mapnik"
+  width="100%"
+  height="300"
+  frameborder="0">
+</iframe>
+        </div>
+        <ul class="space-y-2 text-sm">
+          <li class="flex">
+            <i class="fas fa-map-marker-alt text-red-500 mt-1 mr-2"></i>
+            <span>Registon maydoni yonida, Universitet ko'chasi 12</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-phone text-red-500 mt-1 mr-2"></i>
+            <span>+998 66 233 55 77</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-clock text-red-500 mt-1 mr-2"></i>
+            <span>Dushanba-Shanba: 8:00 - 20:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+    <!-- 4. Buxoro filiali -->
+    <div class="swiper-slide">
+      <div class="bg-white p-5 rounded-xl shadow branch-card h-full">
+        <h3 class="text-lg font-bold mb-4">Buxoro filiali</h3>
+        <div class="rounded-xl overflow-hidden w-full h-48 mb-4">
+         <!-- OpenStreetMap alternativasi (API kerak emas) -->
+<iframe
+  src="https://www.openstreetmap.org/export/embed.html?bbox=69.240562,41.311081,69.250000,41.320000&layer=mapnik"
+  width="100%"
+  height="300"
+  frameborder="0">
+</iframe>
+        </div>
+        <ul class="space-y-2 text-sm">
+          <li class="flex">
+            <i class="fas fa-map-marker-alt text-red-500 mt-1 mr-2"></i>
+            <span>Eshoni Pir ko'chasi 15</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-phone text-red-500 mt-1 mr-2"></i>
+            <span>+998 65 223 45 67</span>
+          </li>
+          <li class="flex">
+            <i class="fas fa-clock text-red-500 mt-1 mr-2"></i>
+            <span>Dushanba-Shanba: 8:00 - 20:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="swiper-pagination mt-6"></div>
 </div>
 
+<!-- CSS qo'shimchalari -->
+<style>
+  .branch-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .branch-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+  iframe {
+    filter: grayscale(20%);
+    border-radius: 12px;
+  }
+</style>
 
 
-    </div>
-  </div>
-</section>
+    <!-- Ro'yxatdan o'tish formasi -->
+    <section id="signup" class="bg-gradient-to-br from-red-50 to-purple-50 py-12 md:py-20 px-4">
+      <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <!-- Forma qismi -->
+          <div class="p-6 md:p-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Kursga yoziling</h2>
 
-    <!-- SwiperJS script -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-  const swiper = new Swiper(".certSwiper", {
-    slidesPerView: 1.1,
-    spaceBetween: 20,
-    grabCursor: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true
-    },
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 }
-    }
-  });
-</script>
+            <form id="signup-form" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Ismingiz</label>
+                <input type="text" name="name" placeholder="Ismingizni kiriting" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+              </div>
 
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Telefon raqamingiz</label>
+                <input type="tel" name="phone" placeholder="+998 XX XXX XX XX" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <p class="text-xs text-gray-500 mt-1">Raqamingizni to'g'ri kiriting, siz bilan bog'lanamiz</p>
+              </div>
 
-<!-- Faqat 1 marta -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Kursni tanlang</label>
+                <select name="course" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" required>
+                  <option value="">Kursni tanlang</option>
+                  <option value="General English">General English</option>
+                  <option value="IELTS Novice">IELTS Novice</option>
+                  <option value="IELTS Advanced">IELTS Advanced</option>
+                  <option value="Ingliz tili + Matematika">Ingliz tili + Matematika</option>
+                  <!-- Yangi kurslar qo'shildi -->
+                  <option value="7 Oylik CEFR">7 Oylik CEFR</option>
+                  <option value="Ingliz tili (Bosqichlar)">Ingliz tili (Bosqichlar)</option>
+                  <option value="Exam (Imtihon)">Exam (Imtihon)</option>
+                  <option value="IELTS">IELTS</option>
+                  <option value="Intensive IELTS">Intensive IELTS</option>
+                  <option value="CEFR">CEFR</option>
+                  <option value="SAT">SAT</option>
+                  <option value="Rus tili">Rus tili</option>
+                  <option value="DTM fanlari">DTM fanlari</option>
+                </select>
+              </div>
 
-  <script>
-  // Filiallar uchun slayder
-  const branchSwiper = new Swiper(".mySwiper", {
-    slidesPerView: 1.2,
-    spaceBetween: 20,
-    centeredSlides: true,
-    grabCursor: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 }
-    }
-  });
+              <button type="submit" class="submit-btn w-full bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 transition">
+                Ro'yxatdan o'tish
+              </button>
+            </form>
 
-  // Kurslar uchun slayder
-  const courseSwiper = new Swiper(".courseSwiper", {
-    slidesPerView: 1.1,
-    spaceBetween: 20,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true
-    },
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 }
-    }
-  });
-</script>
-  <!-- Footer -->
-    <footer id="contact" class="bg-gray-900 text-white py-6 text-center">
-      <p>&copy; 2025 Start21 O‘quv Markazi. Barcha huquqlar himoyalangan.</p>
+            <p id="response" class="mt-4 text-center text-green-600 font-medium hidden">
+              <i class="fas fa-check-circle mr-2"></i> Arizangiz qabul qilindi! Tez orada siz bilan bog'lanamiz.
+            </p>
+          </div>
+
+          <!-- Aloqa qismi -->
+          <div class="bg-gradient-to-br from-red-600 to-red-800 p-6 md:p-8 text-white">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Biz bilan bog'laning</h2>
+
+            <div class="space-y-5">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-map-marker-alt text-xl"></i>
+                </div>
+                <div class="ml-4">
+                  <h3 class="font-bold text-lg">Manzil</h3>
+                  <p>Start21 O‘quv Markazi, Namangan shahri</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-phone text-xl"></i>
+                </div>
+                <div class="ml-4">
+                  <h3 class="font-bold text-lg">Telefon</h3>
+                  <p>+998 97 216 33 33</p>
+                  <p>+998 91 234 56 78</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-envelope text-xl"></i>
+                </div>
+                <div class="ml-4">
+                  <h3 class="font-bold text-lg">Email</h3>
+                  <p>info@start21.uz</p>
+                  <p>support@start21.uz</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-white bg-opacity-20 p-3 rounded-full">
+                  <i class="fas fa-clock text-xl"></i>
+                </div>
+                <div class="ml-4">
+                  <h3 class="font-bold text-lg">Ish vaqti</h3>
+                  <p>Dushanba - Shanba: 8:00 - 20:00</p>
+                  <p>Yakshanba: dam olish kuni</p>
+                </div>
+              </div>
+
+              <div class="pt-4">
+                <h3 class="font-bold text-lg mb-3">Ijtimoiy tarmoqlar</h3>
+                <div class="flex space-x-4">
+                  <a href="https://t.me/effortless_education" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                    <i class="fab fa-telegram text-xl"></i>
+                  </a>
+                  <a href="https://instagram.com/effortless_education" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                    <i class="fab fa-instagram text-xl"></i>
+                  </a>
+                  <a href="https://youtube.com/@effortless_education" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                    <i class="fab fa-youtube text-xl"></i>
+                  </a>
+                  <a href="https://facebook.com/effortless_education" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                    <i class="fab fa-facebook text-xl"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white py-8">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">Start21</h3>
+            <p class="text-gray-400">Ingliz tili va xalqaro imtihonlarga tayyorlov markazi. 2015-yildan beri faoliyat yuritamiz.</p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold mb-4">Tezkor havolalar</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white transition">Bosh sahifa</a></li>
+              <li><a href="#courses" class="hover:text-white transition">Kurslar</a></li>
+              <li><a href="#signup" class="hover:text-white transition">Ro'yxatdan o'tish</a></li>
+              <li><a href="#certificates" class="hover:text-white transition">Sertifikatlar</a></li>
+              <li><a href="#contact" class="hover:text-white transition">Aloqa</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold mb-4">Kurslar</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white transition">General English</a></li>
+              <li><a href="#" class="hover:text-white transition">IELTS Novice</a></li>
+              <li><a href="#" class="hover:text-white transition">IELTS Advanced</a></li>
+              <li><a href="#" class="hover:text-white transition">Ingliz tili + Matematika</a></li>
+              <li><a href="#" class="hover:text-white transition">Biznes Ingliz tili</a></li>
+              <!-- Yangi kurslar qo'shildi -->
+              <li><a href="#" class="hover:text-white transition">7 Oylik CEFR</a></li>
+              <li><a href="#" class="hover:text-white transition">SAT</a></li>
+              <li><a href="#" class="hover:text-white transition">Rus tili</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold mb-4">Biz bilan aloqa</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <span>Namangan shahri, O'zbekiston</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-phone mt-1 mr-2"></i>
+                <span>+998 97 216 33 33</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-envelope mt-1 mr-2"></i>
+                <span>info@start21.uz</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400 text-sm">
+          <p>&copy; 2025 Start21 O‘quv Markazi. Barcha huquqlar himoyalangan.</p>
+          <p class="mt-2">Veb-sayt <a href="https://start21.uz" class="text-red-400 hover:text-red-300">start21.uz</a></p>
+        </div>
+      </div>
     </footer>
 
-  <script>
-  const form = document.getElementById("signup-form");
-  const responseText = document.getElementById("response");
+    <!-- SwiperJS script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  // 🔐 O‘ZINGIZNING BOT TOKEN VA CHAT ID’INGIZNI KIRITING!
-  const botToken = "7861822472:AAEdDDkiGay3bU6oPckgWQvx0x2oQ3C0Mf4"; // Masalan: 123456:ABCdefGhijkLMNOP
-  const chatId = "985364112";     // Masalan: 123456789
+    <script>
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+      const mobileNav = document.getElementById('mobile-nav');
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileNav.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
 
-    const name = form.name.value;
-    const phone = form.phone.value;
-    const course = form.course.value;
+      closeMenuBtn.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+      });
 
-    const message = `
+      // Close menu when clicking outside
+      mobileNav.addEventListener('click', (e) => {
+        if (e.target === mobileNav) {
+          mobileNav.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Swiper initialization
+      const swiperOptions = {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 1.5
+          },
+          768: {
+            slidesPerView: 2.5
+          },
+          1024: {
+            slidesPerView: 3.5
+          }
+        }
+      };
+
+      // Kurslar uchun swiper
+      const courseSwiper = new Swiper('.courseSwiper', swiperOptions);
+
+      // Sertifikatlar uchun swiper
+      const certSwiper = new Swiper('.certSwiper', swiperOptions);
+
+      // Filiallar uchun swiper
+      const branchSwiper = new Swiper('.branchSwiper', swiperOptions);
+
+      // Form submission
+      const form = document.getElementById("signup-form");
+      const responseText = document.getElementById("response");
+
+      const botToken = "7861822472:AAEdDDkiGay3bU6oPckgWQvx0x2oQ3C0Mf4";
+      const chatId = "985364112";
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = form.name.value.trim();
+        const phone = form.phone.value.trim();
+        const course = form.course.value;
+
+        // Telefon raqam formatini tekshirish
+        const phoneRegex = /^\+998\d{9}$/;
+        if (!phoneRegex.test(phone)) {
+          alert("Iltimos, telefon raqamingizni +998XXXXXXXXX formatida kiriting!");
+          return;
+        }
+
+        // Ismni tekshirish
+        if (name.length < 3) {
+          alert("Iltimos, ismingizni to'liq kiriting!");
+          return;
+        }
+
+        const message = `
 📝 <b>Yangi ro‘yxatdan o‘tish:</b>
 👤 Ism: ${name}
 📞 Telefon: ${phone}
 📘 Kurs: ${course}
-    `;
+        `;
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: "HTML"
-      })
-    })
-    .then(res => {
-      if (res.ok) {
-        form.reset();
-        responseText.classList.remove("hidden");
-      } else {
-        alert("❌ Yuborishda xatolik yuz berdi.");
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: "HTML"
+          })
+        })
+        .then(res => {
+          if (res.ok) {
+            form.reset();
+            responseText.classList.remove("hidden");
+            setTimeout(() => {
+              responseText.classList.add("hidden");
+            }, 5000);
+          } else {
+            alert("❌ Yuborishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");
+          }
+        });
+      });
+
+      // Teachers component (Sizning asl versiyangiz)
+      function teachersComponent() {
+        return {
+          selected: 0,
+          teachers: [
+            {
+              name: "Humoyun",
+              score: "9.0",
+              certificate: "CELTA",
+              experience: "3+",
+              students: "3500+",
+              image: "images/teacher1.jpg",
+              avatar: "images/teacher1.jpg",
+              quote: "O‘zbekistonda 8-bo‘lib IELTS 9.0 ballni qo‘lga kiritganman va bu o‘zimga bo‘lgan ishonchni yanada orttirgan. O‘quvchilarim yaxshi natijaga chiqishlari uchun barcha bo‘limlarga e’tibor beraman."
+            },
+            {
+              name: "Chingiz",
+              score: "3x9.0",
+              certificate: "CELTA",
+              experience: "5+",
+              students: "200+",
+              image: "images/teacher3.jpg",
+              avatar: "images/teacher3.jpg",
+              quote: "Ketma-ket 3 marta IELTS 9.0 natijani qo‘lga kiritganman. Imkonsiz degan gap men uchun emas."
+            },
+            {
+              name: "Zarnigor",
+              score: "8.5",
+              certificate: "CELTA",
+              experience: "2 yil",
+              students: "500+",
+              image: "images/teacher2.jpg",
+              avatar: "images/teacher2.jpg",
+              quote: "17 yoshimda IELTS topshirganman va birinchi urinishda 8.0 ballni olganman."
+            },
+            {
+              name: "Bunyod",
+              score: "8.5",
+              certificate: "CELTA",
+              experience: "3+",
+              students: "700+",
+              image: "images/teacher4.jpg",
+              avatar: "images/teacher4.jpg",
+              quote: "Oliy maqsadim o‘quvchilarga ingliz tili orqali imkoniyat eshiklarini ochish."
+            }
+          ],
+          selectTeacher(index) {
+            this.selected = index;
+          }
+        };
       }
-    });
-  });
-</script>
-
-
-
+    </script>
   </body>
 </html>
